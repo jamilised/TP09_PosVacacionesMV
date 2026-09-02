@@ -10,6 +10,7 @@ interface ItemListProps {
   error: string | null;
   isFavorite: (id: string) => boolean;
   onToggleFavorite: (book: Book) => void;
+  onSelectBook?: (book: Book) => void;
 }
 
 export const ItemList: FC<ItemListProps> = ({
@@ -18,6 +19,7 @@ export const ItemList: FC<ItemListProps> = ({
   error,
   isFavorite,
   onToggleFavorite,
+  onSelectBook,
 }) => {
   if (loading) {
     return (
@@ -54,6 +56,7 @@ export const ItemList: FC<ItemListProps> = ({
             book={item}
             isFavorite={isFavorite(item.id)}
             onToggleFavorite={onToggleFavorite}
+            onSelectBook={onSelectBook}
           />
         )}
         contentContainerStyle={styles.listContent}

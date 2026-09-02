@@ -1,9 +1,10 @@
-import type { FC } from 'react';
+import { useState, type FC } from 'react';
 import { View } from 'react-native';
 import type { Book } from '../../types/book';
 import { useBooks } from '../../hooks/useBooks';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { ItemList } from '../../components/ItemList/ItemList';
+import { BookDetailModal } from '../../components/BookDetailModal/BookDetailModal';
 import { styles } from './Home.styles';
 
 interface HomeScreenProps {
@@ -13,6 +14,7 @@ interface HomeScreenProps {
 
 export const HomeScreen: FC<HomeScreenProps> = ({ isFavorite, onToggleFavorite }) => {
   const { books, loading, error, searchTerm, setSearchTerm } = useBooks();
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   return (
     <View style={styles.container}>
@@ -26,6 +28,13 @@ export const HomeScreen: FC<HomeScreenProps> = ({ isFavorite, onToggleFavorite }
         loading={loading}
         error={error}
         isFavorite={isFavorite}
+        onToggleFavorite={onToggleFavorite}
+        onSelectBook={setSelectedBook}
+      />
+      <BookDetailModal
+        book={selectedBook}
+        onClose={() => setSelectedBook(null)}
+        isFavorite={selectedBook ? isFavorite(selectedBook.id) : false}
         onToggleFavorite={onToggleFavorite}
       />
     </View>

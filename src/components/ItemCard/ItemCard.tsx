@@ -8,17 +8,25 @@ interface ItemCardProps {
   book: Book;
   isFavorite: boolean;
   onToggleFavorite: (book: Book) => void;
+  onSelectBook?: (book: Book) => void;
 }
 
 export const ItemCard: FC<ItemCardProps> = ({
   book,
   isFavorite,
   onToggleFavorite,
+  onSelectBook,
 }) => {
   const { title, coverUrl, authors, publishYear } = book;
 
   return (
-    <View style={styles.card}>
+    <Pressable
+      style={({ pressed }) => [
+        styles.card,
+        pressed && { opacity: 0.9 },
+      ]}
+      onPress={() => onSelectBook && onSelectBook(book)}
+    >
       <Image
         source={{ uri: coverUrl }}
         style={styles.coverImage}
@@ -53,6 +61,6 @@ export const ItemCard: FC<ItemCardProps> = ({
           <Text style={styles.year}>Año: {publishYear}</Text>
         )}
       </View>
-    </View>
+    </Pressable>
   );
 };

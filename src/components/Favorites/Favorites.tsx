@@ -8,12 +8,14 @@ interface FavoritesProps {
   favorites: Book[];
   isFavorite: (id: string) => boolean;
   onToggleFavorite: (book: Book) => void;
+  onSelectBook?: (book: Book) => void;
 }
 
 export const Favorites: FC<FavoritesProps> = ({
   favorites,
   isFavorite,
   onToggleFavorite,
+  onSelectBook,
 }) => {
   if (favorites.length === 0) {
     return (
@@ -33,6 +35,7 @@ export const Favorites: FC<FavoritesProps> = ({
         error={null}
         isFavorite={isFavorite}
         onToggleFavorite={onToggleFavorite}
+        onSelectBook={onSelectBook}
       />
     </View>
   );
